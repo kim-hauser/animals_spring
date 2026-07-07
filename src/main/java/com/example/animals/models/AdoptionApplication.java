@@ -1,5 +1,6 @@
 package com.example.animals.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -12,9 +13,11 @@ public class AdoptionApplication {
     @GeneratedValue
     private Long id;
 
+    @JsonBackReference("applicant-applications")
     @ManyToOne
     private Applicant applicant;
 
+    @JsonBackReference("animal-applications")
     @ManyToOne
     private Animal animal;
 
