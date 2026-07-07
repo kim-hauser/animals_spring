@@ -1,11 +1,14 @@
 package com.example.animals.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +22,15 @@ public class Animal {
 
     private String name;
     private String species;
-    private int age;
+    private Integer age;
 
     @JsonManagedReference("animal-applications")
     @OneToMany(mappedBy = "animal")
     private List<AdoptionApplication> applications = new ArrayList<>();
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "animals")
+    private List<Volunteer> volunteers = new ArrayList<>();
 
     public Animal() {
     }
@@ -58,11 +65,11 @@ public class Animal {
         this.species = species;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -72,5 +79,13 @@ public class Animal {
 
     public void setApplications(List<AdoptionApplication> applications) {
         this.applications = applications;
+    }
+
+    public List<Volunteer> getVolunteers() {
+        return volunteers;
+    }
+
+    public void setVolunteers(List<Volunteer> volunteers) {
+        this.volunteers = volunteers;
     }
 }
